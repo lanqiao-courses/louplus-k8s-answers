@@ -123,9 +123,9 @@ node/kubernetes-worker evicted
 # 查看结果可以看到 kubernetes-worker 已经处于维护状态
 $ kubectl get nodes
 NAME          STATUS                     ROLES    AGE   VERSION
-kube-master   Ready                      master   18d   v1.15.0
-kubernetes-worker   Ready,SchedulingDisabled   <none>   18d   v1.15.0
-kubernetes-workerer2   Ready                      <none>   18d   v1.15.0
+kube-master   Ready                      master   18d   v1.20.9
+kubernetes-worker   Ready,SchedulingDisabled   <none>   18d   v1.20.9
+kubernetes-workerer2   Ready                      <none>   18d   v1.20.9
 # 在 kubernetes-workerer2 生成了两个新的 nginx pod，保证集群中依然有 3 个 nginx pod
 $ kubectl get pods -o wide
 NAME                     READY   STATUS    RESTARTS   AGE    IP           NODE          NOMINATED NODE   READINESS GATES
