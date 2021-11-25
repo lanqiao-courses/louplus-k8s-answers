@@ -62,7 +62,7 @@ tomcat-svc   NodePort    10.98.46.27   <none>        80:30001/TCP   22m
 可以先试着访问一下：
 
 ```bash
-$ curl 10.192.0.2:30001
+$ curl 172.18.0.2:30001
 <!DOCTYPE html>
 <html lang="en">
     <head>

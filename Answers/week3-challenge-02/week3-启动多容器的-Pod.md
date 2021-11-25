@@ -35,20 +35,9 @@ pod/volume-pod created
 检查两个容器中的文件内容是否一致：
 
 ```bash
-$ kubectl exec -it volume-pod -c nginx-container -- cat /usr/share/nginx/html/index.html
-......
-Fri Sep 27 06:09:46 UTC 2019
-Fri Sep 27 06:09:47 UTC 2019
-Fri Sep 27 06:09:48 UTC 2019
-Fri Sep 27 06:09:49 UTC 2019
-Fri Sep 27 06:09:50 UTC 2019
+kubectl exec -it volume-pod -c nginx-container -- cat /usr/share/nginx/html/index.html
 
-$ kubectl exec -it volume-pod -c time-container -- cat /html/index.html
-......
-Fri Sep 27 06:09:58 UTC 2019
-Fri Sep 27 06:09:59 UTC 2019
-Fri Sep 27 06:10:00 UTC 2019
-Fri Sep 27 06:10:01 UTC 2019
-Fri Sep 27 06:10:02 UTC 2019
-
+kubectl exec -it volume-pod -c time-container -- cat /html/index.html
 ```
+
+![图片描述](https://doc.shiyanlou.com/courses/uid1491336-20211109-1636423530497)

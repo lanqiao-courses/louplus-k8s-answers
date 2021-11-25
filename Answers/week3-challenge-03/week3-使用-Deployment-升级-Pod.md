@@ -1,12 +1,5 @@
 # 挑战：使用 Deployment 升级 Pod
 
-由于实验环境为 dind，直接运行 MySQL Pod 会报错，暂时可以使用如下命令解决：
-
-```bash
-sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
-sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
-```
-
 在 `/home/shiyanlou` 目录下新建 `mysql-deployment.yaml` 文件，并写入如下内容：
 
 ```yaml

@@ -1,24 +1,15 @@
 # 挑战：使用 ConfigMap 配置 Pod
 
-由于实验环境为 dind，直接运行 MySQL Pod 会报错，暂时可以使用如下命令解决：
+- 从文件创建名为 mysql-config 的 ConfigMap：
 
 ```bash
-sudo ln -s /etc/apparmor.d/usr.sbin.mysqld /etc/apparmor.d/disable/
-sudo apparmor_parser -R /etc/apparmor.d/usr.sbin.mysqld
-```
-
-从文件创建名为 mysql-config 的 ConfigMap：
-
-```bash
-$ kubectl create configmap mysql-config --from-file=mysqld.cnf
-configmap/mysql-config created
+kubectl create configmap mysql-config --from-file=mysqld.cnf
 ```
 
 使用 key-value 键值对创建名为 myconfig 的 ConfigMap：
 
 ```bash
-$ kubectl create configmap myconfig --from-literal=v1=shiyanlou
-configmap/myconfig created
+kubectl create configmap myconfig --from-literal=v1=shiyanlou
 ```
 
 补充完整的 `mysql-d.yaml` 文件内容如下：
@@ -60,14 +51,13 @@ spec:
 执行创建：
 
 ```bash
-$ kubectl create -f mysql-d.yaml
-deployment.apps/mysql created
+kubectl create -f mysql-d.yaml
 ```
 
 验证文件是否挂载成功，以及 MySQL 密码是否能够使用：
 
 ```bash
-$ kubectl get pods
+$ kubectl get pods | grep mysqlex
 mysql-6574f97df5-wc2vg   1/1     Running     0          52s
 
 $ kubectl exec -it mysql-6574f97df5-wc2vg bash
