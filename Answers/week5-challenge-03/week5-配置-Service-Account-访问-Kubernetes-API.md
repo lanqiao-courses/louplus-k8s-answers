@@ -17,7 +17,7 @@ default                         1         200d
 # 配置 ClusterRole 和 ClusterRoleBinding
 $ touch clusterRole.yaml
 
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: api-access
@@ -56,7 +56,7 @@ rules:
   - nonResourceURLs: ["*"]
     verbs: ["*"]
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: api-access
@@ -91,28 +91,28 @@ eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiw
 
 ```bash
 # 获取集群中 kubernetes 对应的 endpoint，也就是 Server API 的地址
-$ kubectl get endpoints | grep kubernetes
-kubernetes   10.192.0.2:6443   200d
+$ kubectl get endpoints
+kubernetes   172.18.0.2:6443   200d
+
 # 测试，访问非资源型URL：healthz/ping，<TokenOfSecret> 就是通过上面命令获取到的 token
-$ curl -k 'https://10.192.0.2:6443/healthz/ping' -H 'Authorization: Bearer <TokenOfSecret>'
+$ curl -k 'https://172.18.0.2:6443/healthz/ping' -H 'Authorization: Bearer <TokenOfSecret>'
 ok
+
 # 测试，访问命名空间资源：api/v1/namespaces，<TokenOfSecret> 就是通过上面命令获取到的 token
-$ curl -k 'https://10.192.0.2:6443/api/v1/namespaces' -H 'Authorization: Bearer <TokenOfSecret>'
+$ curl -k 'https://172.18.0.2:6443/api/v1/namespaces' -H 'Authorization: Bearer <TokenOfSecret>'
 {
   "kind": "NamespaceList",
   "apiVersion": "v1",
   "metadata": {
-    "selfLink": "/api/v1/namespaces",
-    "resourceVersion": "1438"
+    "resourceVersion": "4629"
   },
   "items": [
     {
       "metadata": {
         "name": "default",
-        "selfLink": "/api/v1/namespaces/default",
         "uid": "462d8172-6d21-4562-b13f-4b2cbf8db62f",
-        "resourceVersion": "148",
-        "creationTimestamp": "2019-08-18T01:35:53Z"
-      },
+        "resourceVersion": "199",
+        "creationTimestamp": "2021-11-18T01:35:53Z"
+        "managedFields": {
 ...
 ```
