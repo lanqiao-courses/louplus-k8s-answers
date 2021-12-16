@@ -46,7 +46,7 @@ $ helm repo add test_repo http://172.18.0.3:30002/chartrepo/chart_repo
 "test_repo" has been added to your repositories
 $ helm repo ls
 NAME        URL
-stable      https://kubernetes-charts.storage.googleapis.com
+stable      https://charts.helm.sh/stable
 goharbor    https://helm.goharbor.io
 test_repo   http://172.18.0.3:30002/chartrepo/chart_repo
 ```

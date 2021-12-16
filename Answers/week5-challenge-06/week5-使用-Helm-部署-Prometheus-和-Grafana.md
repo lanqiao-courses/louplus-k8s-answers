@@ -1,6 +1,6 @@
 # 挑战：使用 Helm 部署 Prometheus 和 Grafana
 
-安装 Helm：
+安装 Helm：（环境里已安装，可跳过）
 
 ```bash
 $ wget https://labfile.oss.aliyuncs.com/courses/1457/helm-v3.0.2-linux-amd64.tar.gz
@@ -9,8 +9,12 @@ $ sudo cp linux-amd64/helm /usr/local/bin/helm
 # 安装成功，查看 Helm 的版本
 $ helm version
 version.BuildInfo{Version:"v3.0.2", GitCommit:"19e47ee3283ae98139d98460de796c1be1e3975f", GitTreeState:"clean", GoVersion:"go1.13.5"}
-# 添加官方 Chart 仓库
-$ helm repo add stable https://kubernetes-charts.storage.googleapis.com
+```
+
+添加官方 Chart 仓库
+
+```bash
+$ helm repo add stable https://charts.helm.sh/stable
 "stable" has been added to your repositories
 $ helm repo update
 Hang tight while we grab the latest from your chart repositories...
@@ -58,6 +62,7 @@ prometheus-server.default.svc.cluster.local
 Get the Prometheus server URL by running these commands in the same shell:
   export POD_NAME=$(kubectl get pods --namespace default -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
   kubectl --namespace default port-forward $POD_NAME 9090
+
 $ kubectl get pods
 NAME                                             READY   STATUS    RESTARTS   AGE
 prometheus-alertmanager-85f7d8555f-5449f         2/2     Running   0          2m
@@ -65,7 +70,7 @@ prometheus-kube-state-metrics-685dccc6d8-plsvf   1/1     Running   0          2m
 prometheus-node-exporter-9rzpz                   1/1     Running   0          2m
 prometheus-node-exporter-hf66k                   1/1     Running   0          2m
 prometheus-pushgateway-55679fd67f-w8btb          1/1     Running   0          2m
-prometheus-server-5fbc688c44-79m9k               1/2     Running   0          2m
+prometheus-server-5fbc688c44-79m9k               2/2     Running   0          2m
 # 设置端口转发
 $ export POD_NAME=$(kubectl get pods --namespace default -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
 $ kubectl --namespace default port-forward $POD_NAME 9090
@@ -74,7 +79,7 @@ Forwarding from 127.0.0.1:9090 -> 9090
 
 然后在浏览器访问 `127.0.0.1:9090` 地址，可以看到正确的 Prometheus 页面：
 
-![image](https://doc.shiyanlou.com/courses/1527/600404/3ccfd105353eb672a4c4771245401a4a-0/wm)
+![图片描述](https://doc.shiyanlou.com/courses/uid1491336-20211215-1639561299426)
 
 接下来安装 grafana：
 
@@ -159,3 +164,7 @@ wget https://labfile.oss.aliyuncs.com/courses/1527/pod-monitoring.json
 ![image](https://doc.shiyanlou.com/courses/1527/600404/73ff9975d3aa50b270d38368cf250c72-0/wm)
 
 ![image](https://doc.shiyanlou.com/courses/1527/600404/1c80766d8e17f728fcfb9bc7d0952718-0/wm)
+
+### 额外任务
+
+你可能已经注意到了，有些仪表盘监控项显示为 N/A 或者无数据，这通常是由于版本升级或者集群信息不一致导致的，你可以自行尝试修改 PromQL 语句。
